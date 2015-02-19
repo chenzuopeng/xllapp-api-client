@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xllapp.api.client.dao.ConfigDao">
+
+   <resultMap id="configResultMap" type="org.xllapp.api.client.entity.Config">
+          <result property="id" column="ID"/>
+          <result property="group" column="CONFIG_GROUP"/>
+          <result property="key" column="CONFIG_KEY"/>
+          <result property="value" column="CONFIG_VALUE"/>
+          <result property="remark" column="REMARK"/>
+          <result property="createTime" column="CREATE_TIME"/>
+          <result property="lastModifTime" column="LAST_MODIF_TIME"/>
+   </resultMap>
+	
+	<select id="query"  parameterType="map"  resultMap="configResultMap">
+		select ID,CONFIG_GROUP,CONFIG_KEY,CONFIG_VALUE from CONFIG
+		<where>
+			      <if test="@Ognl@isNotEmpty(groups)">
+				  and CONFIG_GROUP in <foreach item="item" collection="groups" separator="," open="(" close=")" index="index">#{item}</foreach>
+			      </if>
+			      <if test="@Ognl@isNotEmpty(keys)">
+				  and CONFIG_KEY in <foreach item="item" collection="keys" separator="," open="(" close=")" index="index">#{item}</foreach>
+			      </if>
+		</where>
+	</select>
+	
+</mapper> 

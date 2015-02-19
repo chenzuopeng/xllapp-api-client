@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+     <!-- 此配置文件存放项目独有的日志配置 -->
+     
+     <!-- 关闭xmemcached的DEBUG等级日志输出 -->
+     <logger name="com.google.code.yanf4j" level="INFO"/>
+     <logger name="net.rubyeye.xmemcached" level="INFO"/>
+     
+     <!-- 关闭activemq的DEBUG等级日志输出 -->
+     <logger name="org.apache.activemq.transport" level="INFO"/>
+     
+    <!-- 发送成功的消息日志 -->
+	<appender name="PRODUCER_SUCCESS_MESSAGE_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/message/producer/success.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 发送失败的消息日志 -->
+	<appender name="PRODUCER_FAILED_MESSAGE_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/message/producer/failed.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="jms.producer.message.success" level="INFO" addtivity="false">
+		<appender-ref ref="PRODUCER_SUCCESS_MESSAGE_FILE" />
+	</logger>
+
+	<logger name="jms.producer.message.failed" level="INFO" addtivity="false">
+		<appender-ref ref="PRODUCER_FAILED_MESSAGE_FILE" />
+	</logger>
+
+
+</included>
+
